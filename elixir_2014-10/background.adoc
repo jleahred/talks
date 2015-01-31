@@ -1,0 +1,11 @@
+[,opacity: 0.4; position: absolute; right: 10%; bottom: 10%;]
+&&&&
+image:images/elixir_logo_transp.png[]
+&&&& 
+
+
+
+[,opacity: 0.4; position: absolute; right: 10%; bottom: 10%;]
+&&&&
+image::images/elixir_big_logo.png[]
+&&&&

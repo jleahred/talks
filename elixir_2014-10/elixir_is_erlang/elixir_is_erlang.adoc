@@ -1,0 +1,487 @@
+//:backend: slidy2
+//:slidefontsizeadjust: 4
+
+
+
+== Elixir is Erlang
+
+[cols=3, frame="none", grid="none", align="center"]
+|==================
+a|
+    * Runs on Erlang VM
+    * Writted on Erlang
+    * Interoperates with Erlang
+        ** Elixir -> Erlang
+        ** Erlang -> Elixir
+
+a|
+image::elixir.png[width=300]
+a|
+image::erlang.jpg[width=400]
+|==================
+
+
+
+
+        
+== Elixir is Erlang
+
+
+[jle_temp_and_run]
+++++++++++++++++++++++++
+run=[('dot -O -Tpng /tmp/adoc/src_ast.dot', '', 'wt')]
+
+file_name='src_ast.dot'
+
+digraph G 
+{ 
+    rankdir=TB; 
+    node[fontsize=18 width=3 style="filled,rounded" fillcolor="#ddeeffff" shape=rectangle] "elixir.SRC"  "elixir.AST"
+    node[width=3 style="filled,rounded" fillcolor="#ffddddff" shape=rectangle] "erlang.AST"  "erlang.BEAM"
+
+    "elixir.SRC" -> "elixir.AST" -> "erlang.AST" -> "erlang.BEAM"
+}
+
+++++++++++++++++++++++++
+[cols=3, frame="none", grid="none", align="center"]
+|==================
+a|
+image::/tmp/adoc/src_ast.dot.png[align="center", width=400]
+
+a|
+image::elixir.png[width=300]
+
+a|
+image::erlang.jpg[width=400]
+
+|==================
+
+
+
+
+== Erlang VM (robustness)
+[gray]#Elixir is Erlang#
+
+
+
+[cols=2, frame="none", grid="none", align="center"]
+|====================
+a|
+
+[quote, 1996 Sept. 28, The economist]
+Si los automoviles hubieran evolucionado de una forma tan espectacular como la industria de los ordenadores en los últimos años, un automovil podría alcanzar la velocidad de 160.000 km/h, podría recorrer 300.000 km con 4 litros de combustible y costaría tan sólo $5.
+
+
+^a|
+image::surprised.gif[align="center", width=300]
+|====================
+
+
+
+<<<
+[gray]#Elixir is Erlang#
+
+[cols=2, frame="none", grid="none", align="center"]
+|====================
+a|
+
+[quote]
+If GM had kept up with technology like the computer industry has, we would all be driving
+twenty-five dollar cars that got 1000 mi/gal."
+
+
+^a|
+image::surprised.gif[align="center", width=300]
+|====================
+
+
+<<<
+[gray]#Elixir is Erlang#
+
+[cols=2, frame="none", grid="none", align="center"]
+|====================
+a|
+
+[quote]
+If GM had kept up with technology like the computer industry has, we would all be driving
+twenty-five dollar cars that got 1000 mi/gal."
+
+[red]#And your car or plane would suddenly explote for no reason killing all the people inside#
+
+
+^a|
+image::car_explosion.jpg[align="center", width=400]
+|====================
+
+
+
+<<<
+[gray]#Elixir is Erlang#
+
+
+Multitask is good in several contexts.
+
+What about if we introduce multitask on applications (processes)?
+
+
+Threads...
+
+
+<<<
+[gray]#Elixir is Erlang#
+
+
+
+[big]#Threads?, shared mutable memory?#
+
+image::hydrogen-bomb.jpg[align="center", width=700]
+
+
+
+
+<<<
+[gray]#Elixir is Erlang#
+
+
+[big]#Erlang VM  999.999.999#
+
+[cols=2, frame="none", grid="none", align="center"]
+|====================
+^a|
+image::yuhu.jpg[align="center", width=600]
+
+a|
+    * No threads
+    * No shared memory
+    * No mutable state
+    * Functional
+    * OTP
+    * Concurrent
+|====================
+    
+
+
+
+
+== Ways to crash
+[gray]#Elixir is Erlang > Erlang VM (robustness)#
+
+
+[cols=2, frame="none", grid="none", align="center"]
+|====================
+a|
+    * Dangling pointer
+    * Null pointer
+    * Invalid iterator
+    * Out of bounds
+    * Exception not trapped
+    * Integer division by 0
+    * Memory exhaustion
+    * CPU exhaustion
+    * Syntax error
+    * Concurrency
+        ** Threads and shared memory
+        ** Deadlock
+        ** Inanition
+
+a|
+image::explosion.jpg[align="center", width=300]
+|====================
+
+
+<<<
+[gray]#Elixir is Erlang > Erlang VM (robustness)#
+
+
+
+[cols=2, frame="none", grid="none", align="center"]
+|====================
+a|
+[horizontal]
+C++::  11
+Java::  8
+Python:: 9
+Ruby:: 9
+Go:: 9
+Rust:: 4
+
+
+a|
+image::explosion.jpg[align="center", width=300]
+|====================
+
+
+
+<<<
+[gray]#Elixir is Erlang > Erlang VM (robustness)#
+
+[big]#Erlang 2#
+
+[cols=2, frame="none", grid="none", align="center"]
+|====================
+a|
+    * Memory exhaustion
+    * Concurrency
+        ** Deadlock
+
+a|
+image::explosion.jpg[align="center", width=300]
+|====================
+
+
+== Concurrency and parallelism
+[gray]#Elixir is Erlang#
+
+[cols=2, frame="none", grid="none", align="center"]
+|====================
+a|
+[big]#Concurrency and parallelism rocks. Put it in your favorite language...#
+
+a|
+image::cool.jpg[align="center", width=300]
+|====================
+
+
+
+
+
+
+== C++
+[gray]#Elixir is Erlang > Concurrency and parallelism#
+
+[big red]#THE BEST#
+
+<<<
+[gray]#Elixir is Erlang > Concurrency and parallelism#
+
+[cols=2, frame="none", grid="none", align="center"]
+|====================
+a|
+[quote, chrome doesn't]
+The majority of Chrome code is intended to be single-threaded, where this presents no problem.  When in multi-threaded code, however, the right answer is usually to use a base::LazyInstance.
+
+a|
+image::dont_do_it.jpg[align="center", width=300]
+|====================
+
+
+http://www.chromium.org/developers/coding-style/cpp-dos-and-donts
+
+
+
+== Programin languages and concurrency
+[gray]#Elixir is Erlang > Concurrency and parallelism#
+
+
+
+[cols=2, frame="none", grid="none", align="center"]
+|====================
+a|
+Good...
+
+    * GO, Rust  ->  Chanels
+    * Rust compiler avoid race condicions
+    
+Not so Good...
+
+    * Java, Scala, Akka, Go
+        ** gc
+            *** Monothread
+            *** Heavy
+            *** Stop de world
+    * Ruby, Python adds GIL, GVL
+    * Low level control (special case on Go and Rust)
+        ** Threads
+        ** Mutexs
+        ** Semaphores
+        ** ...
+    * Shared mutable state
+    * Not preemptive
+
+Not very different to C++
+
+a|
+image::multitasking.jpg[align="left", width=400]
+|====================
+
+
+
+
+== Erlang
+[gray]#Elixir is Erlang > Concurrency and parallelism#
+
+NOT modern language.
+
+Designed for concurrency and robustness
+
+It was previous to [red]#Free lunch is over#
+
+
+<<<
+[gray]#Elixir is Erlang > Concurrency and parallelism#
+
+
+
+
+[cols=2, frame="none", grid="none", align="center"]
+|====================
+a|
+Good...
+
+    * Actors (inspired in CSP)
+    * No native threads
+    * Light processes
+    * Functional pragmatic
+    * Preemptive*
+    * OTP
+    
+    
+Not so good...
+
+    * Not direct C interfaces*
+
+
+a|
+image::solid_rock.jpg[align="center", width=400]
+
+image::multitasking.jpg[align="left", width=400]
+|====================
+    
+<<<
+[gray]#Elixir is Erlang > Concurrency and parallelism#
+
+[quote]
+In a runtime environment that supports it, it should be possible
+to also have erlang processes at interrupt priority (meaning that 
+they will be allowed to run as soon as there is something for them
+to do -- not having to wait until a normal priority process finishes
+its timeslice.)
+
+http://erlang.org/pipermail/erlang-questions/2001-April/003132.html
+
+
+== Elixir & ErlangVM
+[gray]#Elixir is Erlang > Concurrency and parallelism#
+
+[red big]#Elixir is Erlang#
+
+
+[cols=2, frame="none", grid="none", align="center"]
+|==================
+a|
+image::elixir.png[width=300, align="center"]
+
+a|
+Designed for concurrency, robustness, [blue]#and more...#
+|==================
+
+
+
+
+== Dynamic typing vs static typing
+[gray]#Elixir is Erlang#
+
+[big]#Elixir has Dynamic typing#
+
+as Erlang
+
+<<<
+[gray]#Elixir is Erlang#
+
+
+[big]#Static typing is great#
+
+    * Performance
+    * Refactoring
+    * Compiler checking
+
+<<<
+[gray]#Elixir is Erlang#
+
+[big]#Elixir has Dynamic typing#
+
+as Erlang
+
+image::crying.png[width=300, align="center"]
+
+
+
+<<<
+[gray]#Elixir is Erlang#
+
+[big]#Elixir has Dynamic typing#
+
+[cols=2, frame="none", grid="none", align="center"]
+|==================
+a|
+image::crying.png[width=300, align="center"]
+
+a|
+
+We are with you...
+
+Python, Ruby, Groovy, Smalltalk...
+
+image::../languages/fanatics1.jpg[width=400, align="center"]
+
+|==================
+
+
+<<<
+[gray]#Elixir is Erlang#
+
+[big]#Elixir has Dynamic typing#
+
+[cols=2, frame="none", grid="none", align="center"]
+|==================
+a|
+image::surprise.jpg[width=300, align="center"]
+
+a|
+
+We are with you...
+
+Python, Ruby, Groovy, Smalltalk...
+
+image::../languages/fanatics1.jpg[width=400, align="center"]
+
+|==================
+
+
+== Looking with dynamic typing glasses
+[gray]#Elixir is Erlang > Dynamic typing#
+
+
+[cols=2, frame="none", grid="none", align="center"]
+|==================
+a|
+
+    * Verbosity
+    * Code recycling
+    * Dynamic problems
+    * Type erasure
+    * Code reflection
+    * Homeostasis and incorrect risk correction
+    * Many problems not solved by static types
+
+
+a|
+
+image::../languages/fanatics1.jpg[width=400, align="center"]
+
+|==================
+
+
+
+
+
+== Similarities
+[gray]#Elixir is Erlang#
+
+    * **Everything is an expresion**
+    * List
+    * Tuples
+    * Bynaries
+    * Pattern matching
+    * Guards
+    * ...

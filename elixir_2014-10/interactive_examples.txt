@@ -1,0 +1,333 @@
+Ejemplos interactivos
+
+
+Mi primera función, mi primer módulo, chispas
+
+
+Hello world en consola iex con paréntesis
+Hello world en consola iex sin paréntesis
+Hello world en módulo
+Hello world en una línea
+Hello world con un parámetro y string interpolation
+Hello world con dos parámetros
+Ojo con la posición de los paréntesis y explicar la razón
+Hello world con if (Pablo)
+Hello world con pattern matching (Josua)
+
+
+Todo son expresiones
+ejemplo con if
+comparar con el if de python y ruby
+if en una sóla línea
+
+Función factorial recursiva  Factorial.Recursive
+  probar paréntesis, una línea, etc...
+Función factorial recursiva de cola sin defp  Factorial.TailRecursive
+  con defp
+
+Función factorial Factorial.HighOrder
+  ver ayuda en iex
+Enum.reduce((for n<-1..10, do: n), fn(n, acc)->n*acc end)
+Enum.reduce(for n <- 1..10, fn(n, acc) -> n*acc end)
+Enum.reduce(1..10 |> Enum.to_list, fn(n, acc) -> n*acc end)
+Enum.reduce(1..10, fn(n, acc) -> n*acc end)
+1..10  |> Enum.reduce(fn(n, acc) -> n*acc end)
+
+
+
+Parar para observar algunas diferencias...
+
+Los módulos en mayúsculas, lo demás en minúsculas
+En realidad todo son atoms, pero los que empiezan en mayúsculas se expanden a Elixir.Atom
+; o retorno de carro separan expresiones
+"inferencia de paréntesis" (ya veremos porqué)
+. en vez de : de erlang
+"" es un binario  '' es una lista de enteros
+
+
+
+
+
+
+Mi primera macro, chispas
+
+
+------------------------------------
+defmodule  Hello  do
+
+        def  hi  "José"   do
+                IO.puts "Hello, good to see you again"
+        end
+
+        def  hi  name   do
+                IO.puts "Hello #{name}"
+        end
+        
+        
+        def  all_expresions cond  do
+        
+                a = if cond, [do:  5, else: 10]
+
+                IO.puts a
+        end
+
+        
+end
+
+
+
+defmodule Factorial  do
+
+        defmodule  Recursive  do
+        
+                def calc(0),   do: 1
+                
+                def calc(n)  do
+                        n * calc(n-1)
+                end
+        
+        end
+
+        defmodule  TailRecursive  do
+        
+                def calc(n),   do:  calc(n , 1)
+                
+                defp calc(0, acc), do: acc
+
+                defp calc(n, acc)  do
+                        calc(n-1, acc*n)
+                end
+        
+        end
+        
+        defmodule  HighOrder    do
+        
+                def calc(n),  do: 1..n  |> Enum.reduce(fn(n, acc) -> n*acc end)
+        
+        end
+
+
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+defmodule  FirstMacro  do
+
+    defmacro hi do 
+        IO.puts "hi ____________________________________________________"
+    end
+
+end
+
+
+defmodule Test  do
+
+    def  fm  do
+        require FirstMacro
+        FirstMacro.hi
+    end
+
+end
+
+
+
+--------------------------------------------------------------
+
+defmodule  SillyMacro  do
+
+  defmacro  generate_function  do
+    quote do
+      def double(n) do
+        n * 2
+      end
+    end
+  end
+
+end
+
+
+
+defmodule  Silly  do
+  IO.puts "Generating function..."
+
+  require SillyMacro
+  SillyMacro.generate_function()
+end
+
+
+
+--------------------------------------------------------------
+
+
+defmodule  SillyMacro  do
+
+  defmacro  generate_function(function_name) do
+    quote do
+      def unquote(function_name)(n) do
+        n * 2
+      end
+    end
+  end
+
+end
+
+
+
+defmodule  Silly  do
+  IO.puts "Generating function..."
+
+  require SillyMacro
+  SillyMacro.generate_function(:double3)
+end
+
+
+--------------------------------------------------------------
+
+
+defmodule  SillyMacro  do
+
+  defmacro  generate_function(function_name) do
+    atom_fn = String.to_atom(function_name)
+    quote do
+      def unquote(atom_fn)(n) do
+        n * 2
+      end
+    end
+  end
+
+end
+
+
+
+defmodule  Silly  do
+  IO.puts "Generating function..."
+
+  require SillyMacro
+  SillyMacro.generate_function("double4")
+end
+
+
+----------------------------------------------------------
+
+defmodule  SillyMacro  do
+
+  defmacro  generate_function do
+    IO.puts "Write function name"
+    fn_atom = IO.read(:line)
+        |> String.strip
+        |> String.to_atom
+
+    IO.puts "Generating function... #{inspect fn_atom}"
+    quote do
+      def unquote(fn_atom)(n) do
+        n * 2
+      end
+    end
+  end
+
+end
+
+
+
+defmodule  Silly  do
+
+  require SillyMacro
+
+  SillyMacro.generate_function
+end
+
+
+------------------------------------------------------
+
+
+defmodule  SillyMacro  do
+
+  defmacro  generate_double_fn(fname) do
+    quote do
+      def unquote(fname  |>  String.to_atom)(n)  do
+        2*n
+      end
+    end
+  end
+
+end
+
+
+
+defmodule  Silly  do
+  require SillyMacro
+  SillyMacro.generate_double_fn("pr1")   # OK
+
+  pr2 = "pr2"
+  SillyMacro.generate_double_fn(pr2)     # WRONG
+end
+
+
+
+------------------------------------------------------
+
+
+defmodule  SillyMacro  do
+
+  defmacro  generate_double_fn(fname) do
+    quote bind_quoted: [fname: fname] do
+      def unquote(fname  |>  String.to_atom)(n)  do
+        2*n
+      end
+    end
+  end
+
+end
+
+
+
+defmodule  Silly  do
+  require SillyMacro
+  SillyMacro.generate_double_fn("pr1")
+
+  pr2 = "pr2"
+  SillyMacro.generate_double_fn(pr2)
+end
+
+
+----------------------------------------------------
+
+defmodule  SillyMacro  do
+
+  defmacro  generate_double_fn(fname) do
+    quote bind_quoted: [fname: fname] do
+      IO.puts "Generating function... #{fname}"
+      f_atom_name = fname
+                      |> String.strip
+                      |> String.to_atom
+      def unquote(f_atom_name)(n)  do
+        2*n
+      end
+    end
+  end
+
+end
+
+
+
+defmodule  Silly  do
+  require SillyMacro
+
+  IO.puts "Write de function name..."
+  SillyMacro.generate_double_fn(IO.read :line)
+end
